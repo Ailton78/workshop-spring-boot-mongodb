@@ -30,14 +30,26 @@ public class UserService {
 		return  repository.insert(entity);
 	}
 	
-	public User fromDTO(UserDTO dto) {
-		return new User(dto.getId(), dto.getName(), dto.getEmail());
-	}
-	
 	public void delete(String id) {
 		if(!repository.existsById(id)) {
 			throw new ObjectNotFoundException("Id não encontrado" );
 		}
 		repository.deleteById(id);		
+	}
+	
+	public User updade(User obj) {
+		User newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return newObj;	
+	}
+	
+	public void updateData(User newObj, User obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+	}
+	
+	
+	public User fromDTO(UserDTO dto) {
+		return new User(dto.getId(), dto.getName(), dto.getEmail());
 	}
 }
